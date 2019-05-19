@@ -5,3 +5,4 @@ authors = ["Andy Walsh <andyjasonwalsh@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+ascii = "0.9.1"

@@ -49,7 +49,7 @@ fn testing(test_value: &str, exp: bool) -> () {
 }
 
 #[test]
-fn tests_check_sum() {
+fn test_check_sum() {
     let n = "1762483";
     testing(n, true);
     let n = "51562190040903843";

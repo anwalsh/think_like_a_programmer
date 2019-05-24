@@ -54,6 +54,7 @@ fn punctuation_mode(code_digit: u32) -> ascii::AsciiChar {
 }
 
 fn decode(input: String) -> String {
+    let mut decoded_message;
     let mut input_vec: Vec<u32> = input
         .split(",")
         .map(|x| x.parse::<u32>().unwrap())
@@ -62,13 +63,16 @@ fn decode(input: String) -> String {
     for x in input_vec.iter() {
         if x % 27 || x % 9 == 0 {
             // Switch mode on 0
+            // Not really sure just yet how to implement as Rust enums
+            // do not have an underlying index
         }
         match MODE {
-            Mode::ToUpper => uppercase_mode(*x),
-            Mode::ToLower => lowercase_mode(*x),
-            Mode::Punctuation => punctuation_mode(*x),
+            Mode::ToUpper => decoded_message.push(uppercase_mode(*x)),
+            Mode::ToLower => decoded_message.push(lowercase_mode(*x)),
+            Mode::Punctuation => decoded_message.push(punctuation_mode(*x)),
         }
     }
+    return decoded_message;
 }
 
 fn parse_input() {

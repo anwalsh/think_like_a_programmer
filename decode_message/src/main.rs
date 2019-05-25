@@ -2,7 +2,7 @@ use ascii::ToAsciiChar;
 
 #[derive(Debug, PartialEq)]
 enum Mode {
-    ToUpper = 0,
+    ToUpper,
     ToLower,
     Punctuation,
 }

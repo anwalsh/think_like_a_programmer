@@ -1,13 +1,21 @@
 use ascii::ToAsciiChar;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum Mode {
-    ToUpper,
+    ToUpper = 0,
     ToLower,
     Punctuation,
 }
 
-static mut MODE: Mode = Mode::ToUpper;
+impl Mode {
+    fn change_mode(&self) -> Self {
+        match *self {
+            Mode::ToUpper => Mode::ToLower,
+            Mode::ToLower => Mode::Punctuation,
+            Mode::Punctuation => Mode::ToUpper,
+        }
+    }
+}
 
 fn main() {
     return;
@@ -36,8 +44,9 @@ fn punctuation_mode(code_digit: u32) -> ascii::AsciiChar {
     // 7="
     // 8='
     let input = code_digit % 9;
-    let mut output = 032;
+    let output: u8;
 
+    println!("{}", input);
     match input {
         1 => output = 033,
         2 => output = 063,
@@ -54,29 +63,25 @@ fn punctuation_mode(code_digit: u32) -> ascii::AsciiChar {
 }
 
 fn decode(input: String) -> String {
-    let mut decoded_message;
-    let mut input_vec: Vec<u32> = input
+    let mut major_mode: Mode = Mode::ToUpper;
+    let mut decoded_message: String = "".to_string();
+    let input_vec: Vec<u32> = input
         .split(",")
         .map(|x| x.parse::<u32>().unwrap())
         .collect();
 
     for x in input_vec.iter() {
-        if x % 27 || x % 9 == 0 {
-            // Switch mode on 0
-            // Not really sure just yet how to implement as Rust enums
-            // do not have an underlying index
-        }
-        match MODE {
-            Mode::ToUpper => decoded_message.push(uppercase_mode(*x)),
-            Mode::ToLower => decoded_message.push(lowercase_mode(*x)),
-            Mode::Punctuation => decoded_message.push(punctuation_mode(*x)),
+        if x % 27 == 0 || (major_mode == Mode::Punctuation && x % 9 == 0) {
+            major_mode = major_mode.change_mode();
+        } else {
+            match major_mode {
+                Mode::ToUpper => decoded_message.push(uppercase_mode(*x).as_char()),
+                Mode::ToLower => decoded_message.push(lowercase_mode(*x).as_char()),
+                Mode::Punctuation => decoded_message.push(punctuation_mode(*x).as_char()),
+            }
         }
     }
     return decoded_message;
-}
-
-fn parse_input() {
-    // TODO: parse user input from the CLI
 }
 
 #[cfg(test)]
@@ -112,6 +117,4 @@ mod tests {
         let x = "18,12312,171,763,98423,1208,216,11,500,18,241,0,32,20620,27,10".to_string();
         assert_eq!("Right? Yes!", decode(x));
     }
-
-    fn parse_input_test() {}
 }

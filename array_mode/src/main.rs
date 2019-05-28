@@ -3,7 +3,6 @@ fn main() {
 }
 
 fn get_mode(input: &mut [i32]) -> i32 {
-    // Find the mode of an array and return it
     input.sort();
     let mut mode = 0;
     let mut prev_freq = 0;
@@ -31,5 +30,9 @@ mod tests {
     fn find_mode_test() {
         let mut arr: [i32; 10] = [1, 1, 2, 4, 7, 22, 22, 3, 3, 3];
         assert_eq!(3, get_mode(&mut arr));
+        let mut arr: [i32; 16] = [
+            1, 1, 1, 1, 1, 2, 22, 25, 23, 90, 100, 120, 101, 101, 101, 101,
+        ];
+        assert_eq!(1, get_mode(&mut arr))
     }
 }

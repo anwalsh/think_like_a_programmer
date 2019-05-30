@@ -22,17 +22,17 @@ fn get_mode(input: &mut [i32]) -> i32 {
     return mode;
 }
 
-fn get_mean(input: &[i32]) -> f32 {
-    return (input.iter().sum::<i32>() as f32 / (input.len() as f32) * 1000.0).round() / 1000.0;
+fn get_mean(input: &[i32]) -> f64 {
+    return (input.iter().sum::<i32>() as f64 / (input.len() as f64) * 1000.0).round() / 1000.0;
 }
 
-fn get_median(input: &mut [i32]) -> f32 {
+fn get_median(input: &mut [i32]) -> f64 {
     input.sort();
 
     if input.len() % 2 == 0 {
-        return ((input[input.len() / 2 - 1] + input[input.len() / 2]) / 2) as f32;
+        return ((input[input.len() / 2 - 1] + input[input.len() / 2]) / 2) as f64;
     } else {
-        return (input[input.len() / 2]) as f32;
+        return (input[input.len() / 2]) as f64;
     }
 }
 

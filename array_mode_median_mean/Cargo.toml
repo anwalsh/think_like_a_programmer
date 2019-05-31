@@ -1,5 +1,5 @@
 [package]
-name = "array_mode"
+name = "array_mode_median_mean"
 version = "0.1.0"
 authors = ["Andy Walsh <andyjasonwalsh@gmail.com>"]
 edition = "2018"
